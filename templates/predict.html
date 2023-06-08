@@ -1,0 +1,67 @@
+<title>Gestational Diabetes Risk Calculator</title>
+<h1>
+    Gestational Diabetes Risk
+</h1>
+<table>
+    <form action = "/">
+        <tr>
+            <td><label for "age">Age:</label></td>
+            <td><input type = "text" id = "age"></td>
+            <td>years.</td>
+        </tr>
+
+        <tr>
+            <td><label for "height">Height:</label></td>
+            <td><input type = "text" id = "height"><br></td>
+            <td>inches.</td>
+        </tr>
+
+        <tr>
+            <td><label for "weight">Weight:</label></td>
+            <td><input type = "text" id = "weight"><br></td>
+            <td>lbs.</td>
+        </tr>
+
+        <tr>
+            <td><label for "hdl">HDL Cholesterol: </label></td>
+            <td><input type = "text" id = "hdl"><br></td>
+            <td>mg/dL.</td>
+        </tr>
+
+        <tr>
+            <td><label for "systolic">Systolic Blood Pressure: </label></td>
+            <td><input type = "text" id = "systolic"><br></td>
+            <td>mm Hg.</td>
+        </tr>
+
+        <tr>
+            <td><label for "diastolic">Diastolic Blood Pressure: </label></td>
+            <td><input type = "text" id = "diastolic"><br></td>
+            <td>mm Hg.</td>
+        </tr>
+
+        <tr>
+            <td><label for "glucose">Fasting Glucose: </label></td>
+            <td><input type = "text" id = "glucose"><br></td>
+            <td>mg/dL.</td>
+        </tr>
+
+        <tr>
+            <td><label for "ac1">Hemoglobin Ac1: </label></td>
+            <td><input type = "text" id = "ac1"><br></td>
+            <td>%.</td>
+
+        </tr>
+
+        <tr>
+            <td><input type = "submit" value = "Calculate"></td>
+            <td>Risk: {{prediction}}</td>
+        </tr>
+        
+    </form>
+</table>
+
+<p>
+This calculator is based on a random forests model trained on the dataset found <a href = "https://www.kaggle.com/datasets/sumathisanthosh/gestational-diabetes-mellitus-gdm-data-set">here</a>. 
+It is purely for entertainment purposes and is not meant as an actual diagnostic tool or medical advice.
+</p>
