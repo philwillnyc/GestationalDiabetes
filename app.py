@@ -23,26 +23,31 @@ def compute_bmi(height,weight):
 def check_prediabetes(a1c,glucose):
     return int(glucose > 100 or a1c > 5.6)
 
-#Rendering. 
+#Homepage.
 
 @app.route('/', methods=['GET'])
 def home():
-    session['prediction'] = ''
+    session['prediction'] = 'Risk: '
     return render_template(
                 'predict.html', 
                 prediction = session['prediction'],
                     )
 
-@app.route('/', methods=['GET','POST'])
+#Calculate risk. 
+
+@app.route('/', methods=['POST'])
 def compute():
     r = request.form
-    dia_bp = r['diastolic']
-    sys_bp = r['systolic']
-    hdl = r['hdl']
-    bmi = compute_bmi(r['height'],r['weight'])
-    age = r['age']
-    prediabetes = check_prediabetes(r['a1c'],[r['glucose']])
-    prediction = predict(dia_bp,sys_bp,hdl,bmi,age,prediabetes)
+    try:
+        dia_bp = int(r['diastolic'])
+        sys_bp = int(r['systolic'])
+        hdl = int(r['hdl'])
+        bmi = compute_bmi(int(r['height']),int(r['weight']))
+        age = int(r['age'])
+        prediabetes = check_prediabetes(float(r['a1c']),int(r['glucose']))
+        session['prediction'] = f'Risk: {(int(100*round(predict(dia_bp,sys_bp,hdl,bmi,age,prediabetes),2)))}%'
+    except:
+        session['prediction'] = 'Error in inputs'
     return render_template(
                 'predict.html', 
                 prediction = session['prediction'],
