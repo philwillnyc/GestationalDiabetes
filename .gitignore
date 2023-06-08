@@ -1,0 +1,5 @@
+.ipynb_checkpoints
+.conda
+.vscode
+__pycache__
+flask_session

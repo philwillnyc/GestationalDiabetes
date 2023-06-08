@@ -1,16 +1,14 @@
 """Generates a Logistic Regression model for the gestational diabetes data."""
-
 import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestClassifier
 
 from joblib import dump, load
 
-df = pd.read_excel('gestationalDiabetes.xlsx', index_col = 0)
+df = pd.read_csv('gestationalDiabetes.csv', index_col = 0)
 
 #Deal with nan.
 
