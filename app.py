@@ -27,7 +27,7 @@ def check_prediabetes(a1c,glucose):
 
 @app.route('/', methods=['GET'])
 def home():
-    session['prediction'] = 'Risk: '
+    session['prediction'] = 'Enter information above to predict risk of gestational diabetes.'
     return render_template(
                 'predict.html', 
                 prediction = session['prediction'],
@@ -45,9 +45,14 @@ def compute():
         bmi = compute_bmi(int(r['height']),int(r['weight']))
         age = int(r['age'])
         prediabetes = check_prediabetes(float(r['a1c']),int(r['glucose']))
-        session['prediction'] = f'Risk: {(int(100*round(predict(dia_bp,sys_bp,hdl,bmi,age,prediabetes),2)))}%'
+        no_prediabetes = "" if prediabetes else "no"
+        percent = f'{(int(100*round(predict(dia_bp,sys_bp,hdl,bmi,age,prediabetes),2)))}%'
+        session['prediction'] = f"""
+        A {age} year old female with a BMI of {round(bmi,1)}, a serum HDL cholesterol of {hdl}, blood pressure of {sys_bp} 
+        over {dia_bp}, and {no_prediabetes} prediabetes has a {percent} chance of developing gestational diabetes in her next pregnancy. 
+        """
     except:
-        session['prediction'] = 'Error in inputs'
+        session['prediction'] = 'Error, please check your inputs and try again.'
     return render_template(
                 'predict.html', 
                 prediction = session['prediction'],

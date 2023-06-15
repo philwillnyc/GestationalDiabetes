@@ -12,6 +12,12 @@
     Verdana, 
     sans-serif;
     }
+     
+
+p {
+  max-width: 600px;
+}
+
 </style>
 </head>
 <body>
@@ -20,6 +26,10 @@
 <h1>
     Gestational Diabetes Risk
 </h1>
+<p>
+    This calculator is based on a random forests model trained on the dataset found <a href = "https://www.kaggle.com/datasets/sumathisanthosh/gestational-diabetes-mellitus-gdm-data-set">here</a>. 
+    It is purely for entertainment purposes and is not meant as an actual diagnostic tool or medical advice.
+    </p>
 <table>
     <form action = "/" method = post>
         <tr>
@@ -62,7 +72,7 @@
         </tr>
 
         <tr>
-            <td><label for "ac1">Hemoglobin Ac1: </label></td>
+            <td><label for "ac1">Hemoglobin A1c: </label></td>
             <td><input type = "text" name = "a1c" size = "3" placeholder = "%"><br></td>
 
 
@@ -70,15 +80,15 @@
 
         <tr>
             <td><input type = "submit" value = "Calculate"></td>
-            <td>{{prediction}}</td>
         </tr>
         
     </form>
 </table>
 
 <p>
-This calculator is based on a random forests model trained on the dataset found <a href = "https://www.kaggle.com/datasets/sumathisanthosh/gestational-diabetes-mellitus-gdm-data-set">here</a>. 
-It is purely for entertainment purposes and is not meant as an actual diagnostic tool or medical advice.
+{{prediction}}
 </p>
+
+
 </body>
 </html>
