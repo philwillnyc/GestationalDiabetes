@@ -6,15 +6,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestClassifier
 
-#Create the predictor.
+from joblib import dump, load
+
+#Predictor function
 def predict(dia_bp, sys_bp, hdl, bmi, age, prediabetes):
     """Input physical parameters and returns a probability of gestational diabetes."""
     model = load('model.joblib')
     _, result = model.predict_proba([[dia_bp,sys_bp,hdl,bmi,age,prediabetes]])[0]
     return result
 
+#Building the model
+
 if __name__ == '__main__':
-    from joblib import dump, load
+    
     df = pd.read_csv('gestationalDiabetes.csv', index_col = 0)
 
     #Deal with nan.
