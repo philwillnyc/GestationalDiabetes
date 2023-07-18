@@ -64,4 +64,4 @@ def compute():
                 prediction = session['prediction'],
                     )
 
-#app.run(debug = True)
+app.run(debug = True)
