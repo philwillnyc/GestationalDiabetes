@@ -25,8 +25,14 @@ def check_prediabetes(a1c,glucose):
 
 #Homepage.
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods = ['GET'])
 def home():
+    return render_template('report.html')
+@app.route('/calculator', methods=['GET'])
+
+#Calculator page. 
+
+def start():
     session['prediction'] = 'Enter information above to predict risk of gestational diabetes.'
     return render_template(
                 'predict.html', 
@@ -35,7 +41,7 @@ def home():
 
 #Calculate risk. 
 
-@app.route('/', methods=['POST'])
+@app.route('/calculator', methods=['POST'])
 def compute():
     r = request.form
     try:
@@ -58,4 +64,4 @@ def compute():
                 prediction = session['prediction'],
                     )
 
-app.run(debug = True)
+#app.run(debug = True)

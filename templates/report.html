@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Report</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Gestational Diabetes Model</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14582,11 +14582,11 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>According to the CDC, gestational diabetes (GDM) occurs in an estimated 2% to 10% of pregnancies. A diagnosis of GDM raises the risk of poor outcomes for both mother and child. Because effective interventions exist, diagnosing GDM during pregnancy is of great benefit to mother and child.</p>
-<p>Gestational diabetes is of personal interest to me because my wife had gestational diabetes when she was pregnant with our daughter. Thankfully, we were able to keep it controlled through dietary interventions alone, and our daughter was born without complications. Though the outcome was good, the experience was very difficult, and I've been thinking ever since about how it might be made better.  The standard diagnostic tool is the Oral Glucose Tolerance test, which is administered during pregnancy. I was curious about the prospect of using machine learning to predict a GDM diagnosis. How well could such a model perform? And might such a tool be helpful to improving the experience of pregnant women who will get gestational diabetes?</p>
+<h1 id="Introduction">Modeling Gestational Diabetes<a class="anchor-link" href="#Introduction">&#182;</a></h1><p>According to the CDC, gestational diabetes (GDM) occurs in an estimated 2% to 10% of pregnancies. Occurrence of GDM raises the risk of poor outcomes for both mother and child. Very effective interventions exist, and so diagnosing GDM during pregnancy is of great benefit to mother and child.</p>
+<p>I became interested in GDM because my wife wife had it when she was pregnant with our daughter. Thankfully, we were able to keep it controlled through dietary interventions alone, and our daughter was born without complications. Though the outcome was good, the experience was very difficult for a variety of reasons, and I've been thinking ever since about how it might be made better.  The standard diagnostic tool for GDM is the Oral Glucose Tolerance test, which is administered during pregnancy. I was curious about the prospect of using a machine learning based model to predict a GDM diagnosis. How well could such a model perform? And might such a tool be helpful to improving the experience of pregnant women who will get gestational diabetes?</p>
 <p>After a bit of research, I found that <a href="https://www.techscience.com/cmc/v69n3/44131/html">researchers in India</a> explored this question already. They collected data on pregnancies and trained a model that detects GDM with high accuracy. They made this <a href="https://www.kaggle.com/datasets/sumathisanthosh/gestational-diabetes-mellitus-gdm-data-set">data</a> publicly available.</p>
 <p>The data collected by the researchers includes standard health metrics collected during an annual physical: blood pressure, age, BMI, etc. But the data also includes more specific features, like the presence of Polycystic Ovary Syndrome (PCOS), as well as details about the pregnancy and previous pregnancies. I wanted to see how well we could predict GDM using only measurements that are typically taken during an annual physical. Such a tool would be convenient to use and could perhaps be used by general practictioners to flag women at risk of GDM.</p>
-<p>As a disclaimer, I am not a physician and the results of this analysis are not a diagnostic tool or medical advice!</p>
+<p>As a disclaimer, I am not a physician and the results of this analysis are not a diagnostic tool or medical advice.</p>
 
 </div>
 </div>
@@ -14673,7 +14673,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>In addition to these quantitative measures, the dataset also includes a prediabetes category. For this dataset, prediabetes turns out to be highly specific (almost always indicates GDM) and somewhat sensitive (usually present with GDM).</p>
+<p>In addition to these quantitative measures, the dataset also includes a prediabetes categorical variable. For this dataset, prediabetes turns out to be highly specific (almost always indicates GDM) and somewhat sensitive (usually present with GDM).</p>
 
 </div>
 </div>
@@ -14710,7 +14710,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>Prediabetes can be diagnosed by measuring fasting glucose, and also by Hemoglobin A1C, both of which are typically measured during an annual physical.</p>
+<p>Prediabetes can be diagnosed by measuring fasting glucose, and also by Hemoglobin A1C, both of which are typically measured during an annual physical. Prediabetes is diagnosed if either is elevated above a certain threshold.</p>
 
 </div>
 </div>
@@ -14723,7 +14723,7 @@ class="
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="Machine-Learning-Model">Machine Learning Model<a class="anchor-link" href="#Machine-Learning-Model">&#182;</a></h1><p>Using the features of age, body mass index, HDL cholesterol, systolic blood pressure, diastolic blood pressure, and presence of prediabetes, I trained several different machine learning models on the resulting data set. Before doing so, I imputed missing values for BMI and HDL based on the mean, and used linear regression to impute values for systolic blood pressure based on diastolic blood pressure.</p>
 <p>The models I tried were logistic regression, k-nearest neighbors, support vector machines, and random forests. The random forest model substantially outperformed the other models, with 97\% accuracy. Precision and recall on GDM diagnosis were 0.95 and 0.98 respectively.</p>
-<p>Random forest models can be used to produce a probability, rather than exact prediction. This can be interpreted as an individual's risk of gestational diabetes. Using this model and interpretation, I built a <a href="https://gestational-diabetes-calculator.onrender.com/">simple webapp</a>. The code for the original analysis and the webapp are <a href="https://github.com/philwillnyc/GestationalDiabetes">here</a>. The user inputs age, blood pressure measurements, HDL cholesterol, height and weight (used to compute BMI), fasting glucose and Hemoglobin A1C (used to determine prediabetes), and the app returns a percentage risk for gestational diabetes. Again I feel compelled to give the disclaimer that this is just a fun project and should not be used for actual diagnostic purposes!</p>
+<p>Random forest models can be used to produce a probability, rather than exact prediction. This can be interpreted as an individual's risk of gestational diabetes. Using this model and interpretation, I built a <a href="calculator">simple webapp</a>. The code for the original analysis and the webapp are <a href="https://github.com/philwillnyc/GestationalDiabetes">here</a>. The user inputs age, blood pressure measurements, HDL cholesterol, height and weight (used to compute BMI), fasting glucose and Hemoglobin A1C (used to determine prediabetes), and the app returns a percentage risk for gestational diabetes. Again I feel compelled to give the disclaimer that this is just a fun project and should not be used for actual diagnostic purposes!</p>
 <p>Plugging in my best guess of what my wife's numbers were during her pregnancy, the model predicts a 31% chance of GDM. Based on her current numbers (which I obtained exactly!), her risk for a new pregnancy would be 45%. Given the general prevalence of GDM, the model suggests that her risk is substantially higher than that of the general population.</p>
 
 </div>
@@ -14735,7 +14735,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><p>Gestational diabetes is a serious condition that affects a significant proportion of pregnancies. Several of the most commonly measured physical metrics are strongly predictive of gestational diabetes. I'm interested in learning more about how this could be leveraged in a healthcare setting. The logical next step would be to see how well the model performs on real world data.</p>
+<h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><p>GDM is a serious condition that affects a significant proportion of pregnancies. Several of the most commonly measured physical metrics are strongly predictive of gestational diabetes. I'm interested in learning more about how this could be leveraged in a healthcare setting. The logical next step would be to see how well the model performs in the real world.</p>
 
 </div>
 </div>
